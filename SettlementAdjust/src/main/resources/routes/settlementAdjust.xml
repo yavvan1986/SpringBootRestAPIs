@@ -1,0 +1,10 @@
+<routes xmlns="http://camel.apache.org/schema/spring">
+    <route id="lz-adjust" streamCache="true" routeConfigurationId="defaultRouteConfig,settlementSyntacticErrorHandler,settlementSemanticErrorHandler">
+        <from uri="direct:processAdjust"/>
+        <unmarshal>
+            <custom ref="adjustEventFormat"/>
+        </unmarshal>
+
+    </route>
+
+</routes>

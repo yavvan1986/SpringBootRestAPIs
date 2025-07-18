@@ -1,0 +1,54 @@
+openapi: 3.0.0
+info:
+  title: PZ Communication with LZ to initiate a settlement cutover
+  contact:
+    name: IPS LZ API Team
+  licence:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.0
+servers:
+  - url: /settlement
+
+paths:
+  /adjust:
+    post:
+      tags:
+        - adjust SRP
+      summary: calculate SRP Positions
+      operationId: processAdjust
+      parameters:
+      - in: header
+        name: ipsCorrelationId
+        required: false
+        schema:
+          $ref: '../../common/amqp/common.yml#/components/schemas/accountPositionsPerSettlementSystem'
+
+      responses:
+        200:
+          description: Successful
+          headers:
+            ipsCorrelationId:
+              $ref: '../../common/amqp/common.yml#/components/schemas/accountPositionsPerSettlementSystem'
+          content:
+            application/json:
+              schema:
+                type: object
+        400:
+          description: Syntactic or Semantic validation error
+          headers:
+            ipsCorrelationId:
+              $ref: '../../common/amqp/common.yml#/components/schemas/accountPositionsPerSettlementSystem'
+          content:
+            application/json:
+              schema:
+                type: '../models/response-models.yml#/components/schemas/SettlementOperationResponse'
+        500:
+          description: System Technical Error
+          headers:
+            ipsCorrelationId:
+              $ref: '../../common/amqp/common.yml#/components/schemas/accountPositionsPerSettlementSystem'
+          content:
+            application/json:
+              schema:
+                type: '../models/response-models.yml#/components/schemas/SettlementOperationResponse'

@@ -1,0 +1,76 @@
+openapi: 3.0.1
+info:
+  title: Common schema components
+  description: Collection of commonly used components across the systems
+  version: "0.1"
+paths:
+  /common:
+    get:
+      responses:
+        200:
+          description: Common Components
+
+components:
+  schemas:
+    accountPositionsPerSettlementSystem:
+      type: object
+      required:
+        - settlementSystemIdentifier
+        - concludingSettlementCycle
+        - commencingSettlementCycle
+      properties:
+        settlementSystemIdentifier:
+          $ref: '#/components/schemas/settlementSystemIdentifier'
+        concludingSettlementCycle:
+          $ref: '#/components/schemas/SettlementCycle'
+        commencingSettlementCycle:
+          $ref: '#/components/schemas/SettlementCycle'
+        status:
+          type: string
+        site1:
+          type: array
+          items:
+            $ref: '#/components/schemas/accountGroupPosition'
+        site2:
+          type: array
+          items:
+            $ref: '#/components/schemas/accountGroupPosition'
+    accountPosition:
+      type: object
+      required:
+        - accountIdentifier
+      properties:
+        accountIdentifier:
+          type: string
+          description: Acct sent from pz
+        trackingPositionLimit:
+          type: integer
+          format: int64
+          description: New tracking position limit
+        openingReservePosition:
+          type: integer
+          format: int64
+        openingPosition:
+          type: integer
+        debitCap:
+          type: integer
+          format: int64
+
+    settlementSystemIdentifier:
+      description: Business identifier for a SS
+      type: string
+      maxLength: 36
+      example: SS0001840
+    settlementCycle:
+      required:
+        - number
+        - data
+      properties:
+        number:
+          type: string
+          description: Cycle number
+          pattern: '^\d{3}$'
+        date:
+          type: string
+          format: date
+          description: Cycle date

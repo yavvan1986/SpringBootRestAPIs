@@ -1,0 +1,10 @@
+components:
+  schemas:
+    SettlementOperationResponse:
+      description: Model for settlement operation response
+      type: object
+      properties:
+        reason:
+          type: string
+        reasonCode:
+          type: string
